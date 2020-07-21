@@ -8,7 +8,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.4"
 }
 
-val artifactVersion = "0.4"
+val artifactVersion = "0.5"
 
 group = "org.knanoid"
 version = artifactVersion
@@ -53,7 +53,7 @@ val toolDescription = "KNanoid generates unique IDs"
 
 publishing {
     publications {
-        create<MavenPublication>("maven-publication") {
+        create<MavenPublication>("mavenPublication") {
             groupId = "org.knanoid"
             artifactId = "knanoid"
 
