@@ -2,11 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     kotlin("jvm") version "1.3.72"
+    id("idea")
     id("maven-publish")
+    id("java")
     id("com.jfrog.bintray") version "1.8.4"
 }
 
-val artifactVersion = "0.3"
+val artifactVersion = "0.4"
 
 group = "org.knanoid"
 version = artifactVersion
@@ -20,13 +22,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-    testLogging {
-        events = mutableSetOf(PASSED, SKIPPED, FAILED)
-    }
-}
-
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -36,15 +31,18 @@ tasks {
     }
 }
 
-val pomUrl = "https://github.com/alekseinovikov/knanoid"
-val pomScmUrl = "https://github.com/alekseinovikov/knanoid"
-val pomIssueUrl = "https://github.com/alekseinovikov/knanoid/issues"
-val pomDesc = "https://github.com/alekseinovikov/knanoid"
+tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+        events = mutableSetOf(PASSED, SKIPPED, FAILED)
+    }
+}
 
+val pomUrl = "https://github.com/alekseinovikov/knanoid"
 val gitHubRepo = "https://github.com/alekseinovikov/knanoid.git"
 val githubReadme = "README.md"
 
-val pomLicenseName = "GPL3"
+val pomLicenseName = "GNU GENERAL PUBLIC LICENSE, Version 3.0"
 val pomLicenseUrl = "https://www.gnu.org/licenses/gpl-3.0.en.html"
 val pomLicenseDist = "repo"
 
@@ -59,12 +57,10 @@ publishing {
             groupId = "org.knanoid"
             artifactId = "knanoid"
 
-            from(components["java"])
-
             pom.withXml {
                 asNode().apply {
                     appendNode("description", toolDescription)
-                    appendNode("name", "KNanoid")
+                    appendNode("name", "knanoid")
                     appendNode("url", pomUrl)
                     appendNode("licenses").appendNode("license").apply {
                         appendNode("name", pomLicenseName)
@@ -76,10 +72,12 @@ publishing {
                         appendNode("name", pomDeveloperName)
                     }
                     appendNode("scm").apply {
-                        appendNode("url", pomScmUrl)
+                        appendNode("url", pomUrl)
                     }
                 }
             }
+
+            from(components["java"])
         }
     }
 }
@@ -93,22 +91,8 @@ bintray {
 
     pkg.apply {
         repo = "utils"
-        name = "knanoid"
-        userOrg = pomDeveloperId
-        githubRepo = gitHubRepo
-        vcsUrl = pomScmUrl
-        description = toolDescription
-        setLabels("kotlin", "knanoid")
+        name = project.name
         setLicenses("GPL-3.0")
-        desc = toolDescription
-        websiteUrl = pomUrl
-        issueTrackerUrl = pomIssueUrl
-        githubReleaseNotesFile = githubReadme
-
-        version.apply {
-            name = artifactVersion
-            desc = pomDesc
-            vcsTag = artifactVersion
-        }
+        vcsUrl = gitHubRepo
     }
 }
