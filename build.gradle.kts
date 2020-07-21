@@ -93,13 +93,6 @@ bintray {
 
     pkg.apply {
         repo = "utils"
-        name = project.name
-        setLicenses("GPL-3.0")
-        vcsUrl = "https://github.com/alekseinovikov/knanoid.git"
-    }
-
-    pkg.apply {
-        repo = "maven"
         name = "knanoid"
         userOrg = pomDeveloperId
         githubRepo = gitHubRepo
