@@ -8,7 +8,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.4"
 }
 
-val artifactVersion = "0.5"
+val artifactVersion = "1.0"
 
 group = "org.knanoid"
 version = artifactVersion
