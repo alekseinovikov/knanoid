@@ -106,7 +106,7 @@ bintray {
         vcsUrl = pomScmUrl
         description = toolDescription
         setLabels("kotlin", "knanoid")
-        setLicenses("GRPL-3.0")
+        setLicenses("GPL-3.0")
         desc = toolDescription
         websiteUrl = pomUrl
         issueTrackerUrl = pomIssueUrl
